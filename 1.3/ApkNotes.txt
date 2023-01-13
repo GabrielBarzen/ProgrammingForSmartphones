@@ -1,0 +1,6 @@
+Build config filen under java (generated).
+Build.gradle under gradlescripts.
+
+Hittade https://developer.android.com/studio/publish/app-signing
+
+

@@ -1,4 +1,4 @@
-package se.gabnet.vidiapp;
+package se.gabnet.AudiApp;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("se.gabnet.vidiapp", appContext.getPackageName());
+        assertEquals("se.gabnet.AudiApp", appContext.getPackageName());
     }
 }

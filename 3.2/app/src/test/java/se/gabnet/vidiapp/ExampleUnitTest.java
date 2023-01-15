@@ -1,4 +1,4 @@
-package se.gabnet.vidiapp;
+package se.gabnet.AudiApp;
 
 import org.junit.Test;
 

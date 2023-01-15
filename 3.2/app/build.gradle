@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'se.gabnet.vidiapp'
+    namespace 'se.gabnet.AudiApp'
     compileSdk 32
 
     defaultConfig {
-        applicationId "se.gabnet.vidiapp"
+        applicationId "se.gabnet.audiApp"
         minSdk 28
         targetSdk 32
         versionCode 1

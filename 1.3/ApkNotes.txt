@@ -3,4 +3,22 @@ Build.gradle under gradlescripts.
 
 Hittade https://developer.android.com/studio/publish/app-signing
 
+Skapade self signed SSL cert med kommandot som följer
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./exCert.key -out ./exCert.crt
+under en ny mapp skapad i projektet.
 
+Gick till build->generate signed bundle or apk
+
+Valde apk.
+
+Skapade keystore, vilket automatiskt genererade ett certifikat åt mig så jag inte behövde mina gamla.
+
+Gradle byggde en apk.
+
+Försökde att installera, fick blocked by play protect men kunde klicka install anyway.
+
+Klickade istället ok för att avbryta installation.
+
+Exporterade nyckeln genom att först konvertera till .p12 och sedan eportera .pem kedja från den.
+
+Lyckades inte installera certifikat på min nya telefon, även genom Developer inställningar, däremot lyckades appen installeras på en äldre enhet tillsammans med certifikatet.

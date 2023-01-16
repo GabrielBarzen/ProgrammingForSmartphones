@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VidiApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="record_video_button">Record</string>
+    <string name="play_video_button">Play</string>
+</resources>

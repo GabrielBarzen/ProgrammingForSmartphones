@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">YouTubePlayer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="video1_text">Video1</string>
+    <string name="video2_text">Video2</string>
+    <string name="video3_text">Video3</string>
+    <string name="video4_text">Video4</string>
+    <string name="video5_text">Video5</string>
+    <string name="select_vido_text">Select video!</string>
+</resources>

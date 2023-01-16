@@ -48,7 +48,12 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.random_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int currentCount = Integer.parseInt(showCountTextView.getText().toString());
+                int currentCount;
+                if (showCountTextView.getText().toString().endsWith("Hello world!")) {
+                    currentCount = 1;
+                } else {
+                    currentCount = Integer.parseInt(showCountTextView.getText().toString());
+                }
                 NavDirections action = (NavDirections) FirstFragmentDirections.actionFirstFragmentToSecondFragment(currentCount);
                 NavHostFragment.findNavController(FirstFragment.this).navigate(action);
             }

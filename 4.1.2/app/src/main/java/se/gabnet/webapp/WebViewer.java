@@ -1,5 +1,6 @@
 package se.gabnet.webapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,11 +32,13 @@ public class WebViewer extends Fragment {
     }
     WebView webView;
 
+    @SuppressLint("SetJavaScriptEnabled")
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String url = WebViewerArgs.fromBundle(getArguments()).getUrl();
         System.out.println("Attempt start : " + url);
         webView = view.findViewById(R.id.webView);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {

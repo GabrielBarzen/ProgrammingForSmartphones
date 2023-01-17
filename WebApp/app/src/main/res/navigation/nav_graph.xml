@@ -3,26 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LinkSelector">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/LinkSelector"
         android:name="se.gabnet.webapp.LinkSelect"
-        android:label="@string/first_fragment_label"
+        android:label="@string/link_selector_nav_label"
         tools:layout="@layout/link_selector">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_link_select"
+            app:destination="@id/WebView"/>
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/WebView"
         android:name="se.gabnet.webapp.WebViewer"
-        android:label="@string/second_fragment_label"
+        android:label="@string/web_viewer_nav_label"
         tools:layout="@layout/web_viewer">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_back"
+            app:destination="@id/LinkSelector" />
+        <argument
+            android:name="url"
+            app:argType="string"/>
     </fragment>
 </navigation>

@@ -4,16 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
-import se.gabnet.webapp.databinding.FragmentFirstBinding;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicInteger;
+
+
+import se.gabnet.webapp.databinding.LinkSelectorBinding;
 
 public class LinkSelect extends Fragment {
 
-    private FragmentFirstBinding binding;
+    private LinkSelectorBinding binding;
+
+    LinkedList<String> links = new LinkedList<>();
+
 
     @Override
     public View onCreateView(
@@ -21,21 +31,47 @@ public class LinkSelect extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
+        binding = LinkSelectorBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
+
+    Button link1,link2,link3,link4,link5;
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(LinkSelect.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
+        link1 = (view.findViewById(R.id.link1));
+        link2 = (view.findViewById(R.id.link2));
+        link3 = (view.findViewById(R.id.link3));
+        link4 = (view.findViewById(R.id.link4));
+        link5 = (view.findViewById(R.id.link5));
+
+        link1.setOnClickListener(v -> {
+            String url = "https://www.wikipedia.org/";
+            NavDirections navDirections = LinkSelectDirections.actionLinkSelect(url);
+            NavHostFragment.findNavController(LinkSelect.this).navigate(navDirections);
         });
+        link2.setOnClickListener(v -> {
+            String url = "https://www.reddit.com/";
+            NavDirections navDirections = LinkSelectDirections.actionLinkSelect(url);
+            NavHostFragment.findNavController(LinkSelect.this).navigate(navDirections);
+        });
+        link3.setOnClickListener(v -> {
+            String url = "https://stackoverflow.com/";
+            NavDirections navDirections = LinkSelectDirections.actionLinkSelect(url);
+            NavHostFragment.findNavController(LinkSelect.this).navigate(navDirections);
+        });
+        link4.setOnClickListener(v -> {
+            String url = "https://www.svt.se/";
+            NavDirections navDirections = LinkSelectDirections.actionLinkSelect(url);
+            NavHostFragment.findNavController(LinkSelect.this).navigate(navDirections);
+        });
+        link5.setOnClickListener(v -> {
+            String url = "https://www.bbc.com/news";
+            NavDirections navDirections = LinkSelectDirections.actionLinkSelect(url);
+            NavHostFragment.findNavController(LinkSelect.this).navigate(navDirections);
+        });
+
     }
 
     @Override

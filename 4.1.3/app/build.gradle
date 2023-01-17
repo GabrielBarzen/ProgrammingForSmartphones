@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'se.gabnet.AudiApp'
+    namespace 'se.gabnet.mailsender'
     compileSdk 32
 
     defaultConfig {
-        applicationId "se.gabnet.AudiApp"
+        applicationId "se.gabnet.mailsender"
         minSdk 28
         targetSdk 32
         versionCode 1

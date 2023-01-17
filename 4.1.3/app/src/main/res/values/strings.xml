@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MailSender</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_text">Email</string>
+    <string name="subject_text">Subject</string>
+    <string name="attach_text">Attach</string>
+    <string name="send_text">Send</string>
+</resources>

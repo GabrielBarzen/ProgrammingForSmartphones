@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
 
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragment_connection_view,FragmentConnection.class,null).commit();
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.include_fragment,FragmentConnection.class,null).commit();
 
         }
     }

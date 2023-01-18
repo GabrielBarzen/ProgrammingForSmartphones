@@ -1,4 +1,4 @@
-package se.gabnet.copypaster;
+package se.gabnet.vibrationapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.copy_paste_view, FragmentCopyPaste.class,null).commit();
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.vibraiton_control_view, FragmentVibration.class,null).commit();
         }
     }
-
 }

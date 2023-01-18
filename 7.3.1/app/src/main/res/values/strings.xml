@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ConnectionApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connected_text">Connection:</string>
+    <string name="is_connected_text" />
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SQLiteApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="return_button_text">Back</string>
+    <string name="show_button_text">Show</string>
+    <string name="find_button_text">Find</string>
+    <string name="header_text">Biggest prime found</string>
+    <string name="biggest_prime_text_view">0</string>
+</resources>

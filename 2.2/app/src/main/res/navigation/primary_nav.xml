@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/primary_nav"
+    app:startDestination="@id/primeFinder">
+
+    <fragment
+        android:id="@+id/primeFinder"
+        android:name="se.gabnet.sqliteapp.PrimeFinder"
+        android:label="fragment_prime_finder"
+        tools:layout="@layout/fragment_prime_finder" >
+        <action
+            android:id="@+id/action_primeFinder_to_primeViewer"
+            app:destination="@id/primeViewer" />
+    </fragment>
+    <fragment
+        android:id="@+id/primeViewer"
+        android:name="se.gabnet.sqliteapp.PrimeViewer"
+        android:label="fragment_prime_viewer"
+        tools:layout="@layout/fragment_prime_viewer" >
+        <action
+            android:id="@+id/action_primeViewer_to_primeFinder"
+            app:destination="@id/primeFinder" />
+        <argument
+            android:name="found_primes"
+            app:argType="long[]" />
+    </fragment>
+</navigation>

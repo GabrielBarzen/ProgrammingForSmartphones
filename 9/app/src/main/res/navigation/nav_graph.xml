@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentMain">
+
+    <fragment
+        android:id="@+id/fragmentRecipeList"
+        android:name="se.gabnet.cooky.FragmentRecipeList"
+        android:label="fragment_recipe_list"
+        tools:layout="@layout/fragment_recipe_list" >
+        <action
+            android:id="@+id/action_fragmentRecipeList_to_fragmentRecipeViewer"
+            app:destination="@id/fragmentRecipeViewer" />
+        <action
+            android:id="@+id/action_fragmentRecipeList_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRecipeViewer"
+        android:name="se.gabnet.cooky.FragmentRecipeViewer"
+        android:label="fragment_recipe_viewer"
+        tools:layout="@layout/fragment_recipe_viewer" >
+        <action
+            android:id="@+id/action_fragmentRecipeViewer_to_fragmentRecipeList"
+            app:destination="@id/fragmentRecipeList" />
+        <argument
+            android:name="recipe_selected_or_null_arg"
+            app:argType="se.gabnet.cooky.RecipeEditor"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="se.gabnet.cooky.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_fragmentRecipeList"
+            app:destination="@id/fragmentRecipeList" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMain"
+        android:name="se.gabnet.cooky.FragmentMain"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_fragmentMain_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_fragmentMain_to_fragmentRecipeList"
+            app:destination="@id/fragmentRecipeList" />
+    </fragment>
+</navigation>

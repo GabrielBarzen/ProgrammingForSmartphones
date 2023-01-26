@@ -79,7 +79,11 @@ public class PrimeFinder extends Fragment {
         System.out.println("ITEM_ID:" + itemIds);
         cursor.close();
 
-        biggestPrime = itemIds.remove(itemIds.size()-1);
+        if (itemIds.size() > 0) {
+            biggestPrime = itemIds.remove(itemIds.size() - 1);
+        } else {
+            biggestPrime = 2;
+        }
 
 
         if (itemIds.isEmpty()) {

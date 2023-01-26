@@ -31,9 +31,9 @@ public class PrimeViewer extends Fragment {
         this.context = context;
     }
 
-    Context context;
-    ArrayAdapter<String> adapter;
-    ListView primeListView;
+    private Context context;
+    private ArrayAdapter<String> adapter;
+    private ListView primeListView;
 
     @Override
     public void onPrimaryNavigationFragmentChanged(boolean isPrimaryNavigationFragment) {

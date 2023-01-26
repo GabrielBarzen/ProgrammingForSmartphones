@@ -36,11 +36,11 @@ public class PrimeFinder extends Fragment {
         this.context = context;
     }
 
-    Button show, find;
-    SQLHelper helper;
-    SQLiteDatabase dbWrite;
-    SQLiteDatabase dbRead;
-    TextView prime;
+    private Button show, find;
+    private SQLHelper helper;
+    private SQLiteDatabase dbWrite;
+    private SQLiteDatabase dbRead;
+    private TextView prime;
 
 
     @Override
@@ -75,9 +75,11 @@ public class PrimeFinder extends Fragment {
         }
         System.out.println("ITEM_ID:" + itemIds);
         cursor.close();
-
-        biggestPrime = itemIds.remove(itemIds.size()-1);
-
+        if (itemIds.size() > 0) {
+            biggestPrime = itemIds.remove(itemIds.size() - 1);
+        } else {
+            biggestPrime = 2;
+        }
 
         if (itemIds.isEmpty()) {
             ContentValues values = new ContentValues();

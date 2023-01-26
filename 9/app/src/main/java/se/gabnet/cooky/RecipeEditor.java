@@ -101,6 +101,6 @@ public class RecipeEditor implements Serializable {
 
     @Override
     public String toString() {
-        return id + ", " + title;
+        return title;
     }
 }

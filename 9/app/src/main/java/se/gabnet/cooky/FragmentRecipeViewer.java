@@ -8,10 +8,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -83,6 +86,7 @@ Context context;
     private EditText title;
     private EditText description;
     private ImageView imageView;
+    private ScrollView scrollView;
 
 
     public void save() {
@@ -100,6 +104,7 @@ Context context;
         description = view.findViewById(R.id.recipe_description_text_view);
         imageView = view.findViewById(R.id.recipe_image);
         saveButton = view.findViewById(R.id.save_button);
+        scrollView = view.findViewById(R.id.editor_scroll_view);
 
         if (getArguments() != null) {
             recipeEditor = (RecipeEditor) getArguments().getSerializable("recipe");

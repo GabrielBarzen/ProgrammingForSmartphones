@@ -1,6 +1,7 @@
 package se.gabnet.cooky;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -87,7 +88,7 @@ public class FragmentRecipeList extends Fragment {
             }
         });
 
-        adapter = new RecipeListArrayAdapter(context,R.layout.activity_list_view_item, DatabaseController.getDatabaseController().getRecipeEditorList());
+        adapter = new RecipeListArrayAdapter(context,R.layout.activity_list_view_item, DatabaseController.getDatabaseController().getRecipeEditorList(), this);
         for (int i = 0; i < adapter.getCount(); i++) {
             System.out.println("Items in adapter " + adapter.getItem(i).getId());
         }
@@ -117,5 +118,9 @@ public class FragmentRecipeList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recipe_list, container, false);
+    }
+
+    public void updateAdapter(RecipeListArrayAdapter adapter) {
+        recipeListView.setAdapter(adapter);
     }
 }

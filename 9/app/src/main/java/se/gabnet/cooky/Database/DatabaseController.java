@@ -49,7 +49,6 @@ public class DatabaseController {
         System.out.println("SAVING RECIPE WITH ID " + recipeEditor.getId());
         SQLiteDatabase db = recipeDatabaseHelper.getWritableDatabase();
         ContentValues recipeMetaTableContents = new ContentValues();
-        recipeMetaTableContents.put(RecipeMeta.Entry._ID,recipeEditor.getId());
         recipeMetaTableContents.put(RecipeMeta.Entry.COLUMN_TITLE,recipeEditor.getTitle());
         if (recipeEditor.getImage() != null) {
             recipeMetaTableContents.put(RecipeMeta.Entry.COLUMN_IMAGE, recipeEditor.getImage());
@@ -111,7 +110,7 @@ public class DatabaseController {
 
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
-                BaseColumns._ID + " ASC";
+                BaseColumns._ID + " DESC";
 
         Cursor cursor = db.query(
                 RecipeMeta.Entry.TABLE_NAME,   // The table to query

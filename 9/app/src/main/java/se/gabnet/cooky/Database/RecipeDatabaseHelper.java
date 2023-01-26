@@ -15,7 +15,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_META_TABLE =
             "CREATE TABLE " + RecipeMeta.Entry.TABLE_NAME + " (" +
-                RecipeMeta.Entry._ID + " INTEGER PRIMARY KEY," +
+                RecipeMeta.Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 RecipeMeta.Entry.COLUMN_TITLE + " TEXT," +
                 RecipeMeta.Entry.COLUMN_IMAGE + " BLOB," +
                 RecipeMeta.Entry.COLUMN_DESCRIPTION + " TEXT)";

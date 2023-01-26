@@ -16,18 +16,22 @@ import java.util.List;
 
 public class RecipeListArrayAdapter extends ArrayAdapter<RecipeEditor> {
 
-    Context context;
-    List<RecipeEditor> recipes;
+    private Context context;
+    private List<RecipeEditor> recipes;
+    private FragmentRecipeList fragmentRecipeList;
 
-    public RecipeListArrayAdapter(@NonNull Context context, int resource, @NonNull List<RecipeEditor> recipes) {
+    public RecipeListArrayAdapter(@NonNull Context context, int resource, @NonNull List<RecipeEditor> recipes, FragmentRecipeList fragmentRecipeList) {
         super(context, resource, recipes);
         this.context = context;
         this.recipes = recipes;
+        this.fragmentRecipeList = fragmentRecipeList;
     }
+
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        RecipeListArrayAdapter adapter = this;
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.activity_list_view_item, parent, false);
@@ -42,6 +46,9 @@ public class RecipeListArrayAdapter extends ArrayAdapter<RecipeEditor> {
                             case DialogInterface.BUTTON_POSITIVE:
                                 System.out.println("removing " + recipes.get(position));
                                 PersistentRecipeEditData.deleteRecipe(recipes.get(position));
+                                recipes.remove(position);
+
+                                fragmentRecipeList.updateAdapter(adapter);
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:

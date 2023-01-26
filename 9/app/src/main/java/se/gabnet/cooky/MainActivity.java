@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
 
         new DatabaseController(this);
+        DatabaseController.getDatabaseController().clearDatabase();
+
 
         setContentView(R.layout.activity_main);
 

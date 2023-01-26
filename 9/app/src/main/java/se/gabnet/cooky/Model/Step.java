@@ -2,7 +2,7 @@ package se.gabnet.cooky.Model;
 
 public class Step {
 private String text;
-private int number;
+
 
     public String getText() {
         return text;
@@ -12,11 +12,5 @@ private int number;
         this.text = text;
     }
 
-    public int getNumber() {
-        return number;
-    }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
 }

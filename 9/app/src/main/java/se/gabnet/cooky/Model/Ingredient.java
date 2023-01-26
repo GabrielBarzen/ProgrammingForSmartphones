@@ -4,7 +4,7 @@ public class Ingredient {
     private String text;
     private int amount;
     private boolean weight;
-    private int number;
+
 
     public String getText() {
         return text;
@@ -30,11 +30,4 @@ public class Ingredient {
         this.weight = weight;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
 }

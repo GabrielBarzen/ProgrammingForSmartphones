@@ -12,12 +12,12 @@ import se.gabnet.cooky.Model.Step;
 public class RecipeEditor implements Serializable {
     private List<Step> steps;
     private List<Ingredient> ingredients;
-    private ImageView image;
-    private String description;
-    private String title;
-    private int id;
+    private byte[] image = {};
+    private String description = "";
+    private String title = "";
+    private long id = -1;
 
-    public RecipeEditor(ImageView image) {
+    public RecipeEditor(byte[] image) {
         this.steps = new ArrayList<>();
         this.ingredients = new ArrayList<>();
         this.image = image;
@@ -32,7 +32,7 @@ public class RecipeEditor implements Serializable {
         this.description = "Enter description here";
         this.id = -1;
     }
-    public RecipeEditor(List<Step> steps, List<Ingredient> ingredients, ImageView image, String description) {
+    public RecipeEditor(List<Step> steps, List<Ingredient> ingredients, byte[] image, String description) {
         this.steps = new ArrayList<>();
         this.ingredients = new ArrayList<>();
         this.image = image;
@@ -40,11 +40,21 @@ public class RecipeEditor implements Serializable {
         this.id = -1;
     }
 
-    public RecipeEditor setId(int id) {
+    public RecipeEditor(long recipeID) {
+        this.steps = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
+        this.id = recipeID;
+    }
+
+    public RecipeEditor setId(long id) {
+        this.steps = new ArrayList<>();
+        this.ingredients = new ArrayList<>();
         this.id = id;
         return this;
     }
-    public int getId() {
+
+
+    public long getId() {
         return id;
     }
 
@@ -64,11 +74,11 @@ public class RecipeEditor implements Serializable {
         this.ingredients = ingredients;
     }
 
-    public ImageView getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -91,9 +101,6 @@ public class RecipeEditor implements Serializable {
 
     @Override
     public String toString() {
-        return "{" +
-                " " + id +
-                ", " + title +
-                '}';
+        return id + ", " + title;
     }
 }

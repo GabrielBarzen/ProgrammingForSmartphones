@@ -23,17 +23,15 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_STEPS_TABLE =
             "CREATE TABLE " + RecipeSteps.Entry.TABLE_NAME + " (" +
                 RecipeSteps.Entry.RECIPE + " INTEGER," +
-                    RecipeSteps.Entry.NUMBER + " INTEGER," +
-
-                    RecipeSteps.Entry.COLUMN_TEXT + " TEXT," +
+                RecipeMeta.Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                RecipeSteps.Entry.COLUMN_TEXT + " TEXT," +
             "   FOREIGN KEY(recipe_id) REFERENCES recipe ON DELETE CASCADE)";
 
     private static final String SQL_CREATE_INGREDIENT_TABLE =
             "CREATE TABLE " + RecipeIngredients.Entry.TABLE_NAME + " (" +
                 RecipeIngredients.Entry.RECIPE + " INTEGER," +
-                    RecipeSteps.Entry.NUMBER + " INTEGER," +
-
-                    RecipeIngredients.Entry.COLUMN_TEXT + " TEXT," +
+                RecipeIngredients.Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                RecipeIngredients.Entry.COLUMN_TEXT + " TEXT," +
                 RecipeIngredients.Entry.COLUMN_WEIGHT + " INTEGER," +
                 RecipeIngredients.Entry.COLUMN_AMOUNT + " INTEGER," +
             "   FOREIGN KEY(recipe_id) REFERENCES recipe ON DELETE CASCADE);";
@@ -66,6 +64,11 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
+    }
+
+    public void clear() {
+        final String SQL = "DELETE FROM " +RecipeMeta.Entry.TABLE_NAME+ ";";
+        getWritableDatabase().execSQL(SQL);
     }
 
 }

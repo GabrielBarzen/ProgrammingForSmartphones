@@ -10,53 +10,23 @@ import se.gabnet.cooky.Model.Ingredient;
 import se.gabnet.cooky.Model.Step;
 
 public class RecipeEditor implements Serializable {
-    private List<Step> steps;
-    private List<Ingredient> ingredients;
+    private List<Step> steps = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private byte[] image = {};
     private String description = "";
     private String title = "";
     private long id = -1;
 
-    public RecipeEditor(byte[] image) {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
-        this.image = image;
-        this.description = "Enter description here";
-        this.id = -1;
-    }
-
-    public RecipeEditor() {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
-        this.image = null; //TODO CREATE WHEN NEEDED
-        this.description = "Enter description here";
-        this.id = -1;
-    }
-    public RecipeEditor(List<Step> steps, List<Ingredient> ingredients, byte[] image, String description) {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
-        this.image = image;
-        this.description = "Enter description here";
-        this.id = -1;
-    }
-
-    public RecipeEditor(long recipeID) {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
-        this.id = recipeID;
-    }
-
-    public RecipeEditor setId(long id) {
-        this.steps = new ArrayList<>();
-        this.ingredients = new ArrayList<>();
-        this.id = id;
-        return this;
-    }
-
 
     public long getId() {
         return id;
     }
+
+    public RecipeEditor setId(long id) {
+        this.id = id;
+        return this;
+    }
+
 
     public List<Step> getSteps() {
         return steps;
@@ -102,5 +72,10 @@ public class RecipeEditor implements Serializable {
     @Override
     public String toString() {
         return title;
+    }
+
+    public String printData() {
+        String output = String.format("Title : %s, Description : %s, ingredients: %s, steps %s. ",title,description,ingredients.toString(),steps.toString());
+        return output;
     }
 }

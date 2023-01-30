@@ -90,14 +90,16 @@ Context context;
 
 
     public void save() {
-        DatabaseController.getDatabaseController().updateRecipe(recipeEditor);
+        System.out.println(recipeEditor.printData());
+        long newId = DatabaseController.getDatabaseController().updateRecipe(recipeEditor);
+        recipeEditor.setId(newId);
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        drawerLayout = view.getRootView().findViewById(R.id.main_drawer_layout);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         addIngredientButton = view.findViewById(R.id.add_ingredient_button);
         addStepButton = view.findViewById(R.id.add_step_button);
         title = view.findViewById(R.id.recipe_title_text_view);
@@ -115,7 +117,9 @@ Context context;
         } else {
             title.setText(recipeEditor.getTitle());
             description.setText(recipeEditor.getDescription());
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(recipeEditor.getImage(),0,recipeEditor.getImage().length));
+            if (recipeEditor.getImage() != null) {
+                imageView.setImageBitmap(BitmapFactory.decodeByteArray(recipeEditor.getImage(), 0, recipeEditor.getImage().length));
+            }
             for (Ingredient ingredient : recipeEditor.getIngredients()) {
                 addIngredient(view, ingredient);
             }
@@ -185,7 +189,7 @@ Context context;
             @Override
             public void afterTextChanged(Editable s) {
                 ingredient.setText(s.toString());
-                System.out.println("new ingredient text : " + ingredients.get(0).getText());
+
             }
         });
         amount.addTextChangedListener(new ListUpdateOnTextWatcher() {

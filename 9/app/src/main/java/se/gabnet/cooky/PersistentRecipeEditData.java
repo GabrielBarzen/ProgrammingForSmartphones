@@ -24,8 +24,8 @@ public class PersistentRecipeEditData {
         databaseController.deleteRecipe(recipeEditor);
     }
 
-    public static void update(RecipeEditor currentRecipe) {
-        databaseController.updateRecipe(currentRecipe);
+    public static long update(RecipeEditor currentRecipe) {
+        return databaseController.updateRecipe(currentRecipe);
     }
 }
 

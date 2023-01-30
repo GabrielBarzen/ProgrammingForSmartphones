@@ -30,4 +30,12 @@ public class Ingredient {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "text='" + text + '\'' +
+                ", amount=" + amount +
+                ", weight=" + weight +
+                '}';
+    }
 }

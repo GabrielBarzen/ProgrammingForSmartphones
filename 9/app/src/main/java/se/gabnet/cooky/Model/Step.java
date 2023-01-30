@@ -12,5 +12,10 @@ private String text;
         this.text = text;
     }
 
-
+    @Override
+    public String toString() {
+        return "Step{" +
+                "text='" + text + '\'' +
+                '}';
+    }
 }

@@ -38,14 +38,14 @@ public class DatabaseController {
 
     private static DatabaseController databaseController;
 
-    public void updateRecipe(RecipeEditor recipeEditor) {
+    public long updateRecipe(RecipeEditor recipeEditor) {
         System.out.println("DELETE OLD COPY IF EXIST");
         deleteRecipe(recipeEditor);
         System.out.println("CREATE NEW COPY");
-        createRecipe(recipeEditor);
+        return createRecipe(recipeEditor.setId(recipeEditor.getId()+1));
 
     }
-    public void createRecipe(RecipeEditor recipeEditor) {
+    public long createRecipe(RecipeEditor recipeEditor) {
         System.out.println("SAVING RECIPE WITH ID " + recipeEditor.getId());
         SQLiteDatabase db = recipeDatabaseHelper.getWritableDatabase();
         ContentValues recipeMetaTableContents = new ContentValues();
@@ -77,6 +77,7 @@ public class DatabaseController {
                 db.insert(RecipeIngredients.Entry.TABLE_NAME, null, recipeIngredientContents);
             }
         }
+        return newRowId;
     }
 
     public void deleteRecipe(RecipeEditor recipeEditor) {
@@ -128,7 +129,7 @@ public class DatabaseController {
             long recipeID = cursor.getLong(cursor.getColumnIndexOrThrow(BaseColumns._ID));
             System.out.println("FROM DBCONTROLLER GETTING RECIPE WITH ID : " +recipeID+ " AND PUTTING IN RECIPEEDITORS");
             String recipeTitle = cursor.getString(cursor.getColumnIndexOrThrow(RecipeMeta.Entry.COLUMN_TITLE));
-            recipeEditors.add(new RecipeEditor(recipeID).setTitle(recipeTitle));
+            recipeEditors.add(new RecipeEditor().setTitle(recipeTitle).setId(recipeID));
         }
         cursor.close();
 
@@ -158,7 +159,9 @@ public class DatabaseController {
                 sortOrder               // The sort order
         );
 
-        RecipeEditor recipeEditorOut = new RecipeEditor(recipeEditor.getId());
+        RecipeEditor recipeEditorOut = new RecipeEditor();
+
+
         while(metaCursor.moveToNext()) {
 
             String recipeTitle = metaCursor.getString(metaCursor.getColumnIndexOrThrow(RecipeMeta.Entry.COLUMN_TITLE));
@@ -226,7 +229,7 @@ public class DatabaseController {
             recipeEditorOut.getIngredients().add(ingredient);
         }
         ingredientCursor.close();
-
+        recipeEditorOut.setId(id);
 
         return recipeEditorOut;
     }

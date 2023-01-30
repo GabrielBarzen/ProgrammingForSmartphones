@@ -33,7 +33,7 @@ public class FragmentRecipeList extends Fragment {
     private ListView recipeListView;
     private FloatingActionButton newRecipeButton;
     private NavController navigationController;
-    private RecipeEditor currentRecipe;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -44,8 +44,20 @@ public class FragmentRecipeList extends Fragment {
         adapter = new ArrayAdapter<>(context,R.layout.activity_list_view_item);
 
 
-
         recipeListView.setOnItemClickListener((parent, view1, position, id) -> {
+            RecipeEditor recipe = (RecipeEditor) recipeListView.getItemAtPosition(position);
+            recipe = DatabaseController.getDatabaseController().getRecipeEditor(recipe);
+            System.out.println(recipe.printData());
+            navigateToRecipe(recipe);
+        });
+
+        newRecipeButton.setOnClickListener(v -> {
+            RecipeEditor recipe = new RecipeEditor();
+            navigateToRecipe(recipe);
+        });
+
+
+        /*recipeListView.setOnItemClickListener((parent, view1, position, id) -> {
             Bundle recipeData = null;
             RecipeEditor recipe = (RecipeEditor) recipeListView.getItemAtPosition(position);
             System.out.println("GETTING " + recipe.getId());
@@ -77,22 +89,32 @@ public class FragmentRecipeList extends Fragment {
                     System.out.println("SAVING BEFORE SWITCHING");
                     PersistentRecipeEditData.saveToDb(currentRecipe);
                 }
-                int newId = adapter.getCount() + 1;
-                currentRecipe = new RecipeEditor(newId);
+                if (adapter.getCount() > 0) {
+                    long maxId = adapter.getItem(0).getId();
+                    currentRecipe = new RecipeEditor(maxId);
+                } else {
+                    currentRecipe = new RecipeEditor(-1);
+                }
                 System.out.println("ADDING NEW RECIPE TO DB");
-                PersistentRecipeEditData.saveToDb(currentRecipe);
+                currentRecipe.setId(PersistentRecipeEditData.update(currentRecipe));
 
                 Bundle recipeData = new Bundle();
                 recipeData.putSerializable("recipe", currentRecipe);
                 navigationController.navigate(R.id.action_fragmentRecipeList_to_fragmentRecipeViewer, recipeData);
             }
-        });
+        });*/
 
         adapter = new RecipeListArrayAdapter(context,R.layout.activity_list_view_item, DatabaseController.getDatabaseController().getRecipeEditorList(), this);
         for (int i = 0; i < adapter.getCount(); i++) {
             System.out.println("Items in adapter " + adapter.getItem(i).getId());
         }
         recipeListView.setAdapter(adapter);
+    }
+
+    public void navigateToRecipe(RecipeEditor recipe){
+        Bundle data = new Bundle();
+        data.putSerializable("recipe",recipe);
+        navigationController.navigate(R.id.action_fragmentRecipeList_to_fragmentRecipeViewer, data);
     }
 
     @Override

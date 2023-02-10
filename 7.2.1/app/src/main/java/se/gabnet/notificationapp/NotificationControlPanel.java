@@ -2,18 +2,18 @@ package se.gabnet.notificationapp;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,15 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 public class NotificationControlPanel extends Fragment {
@@ -43,7 +35,7 @@ public class NotificationControlPanel extends Fragment {
 
 
 
-    int NOTIFICATION_CODE = 1;
+
     private boolean requestPermission(String check) {
         if (ActivityCompat.checkSelfPermission(context, check) == PackageManager.PERMISSION_GRANTED){
             return true;

@@ -1,14 +1,17 @@
 package se.gabnet.cooky;
 
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -44,10 +47,10 @@ public class RecipeListArrayAdapter extends ArrayAdapter<RecipeEditor> {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
+                                Toast.makeText(context,"Removing " + recipes.get(position).getTitle() + "." , Toast.LENGTH_SHORT).show();
                                 System.out.println("removing " + recipes.get(position));
-                                PersistentRecipeEditData.deleteRecipe(recipes.get(position));
+                                PersistentRecipeEditData.deleteRecipe(recipes.get(position), context);
                                 recipes.remove(position);
-
                                 fragmentRecipeList.updateAdapter(adapter);
                                 break;
 

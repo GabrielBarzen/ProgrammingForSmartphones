@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/app_widget_description"
-    android:initialKeyguardLayout="@layout/big_prime_view"
-    android:initialLayout="@layout/big_prime_view"
+    android:initialKeyguardLayout="@layout/random_recipe"
+    android:initialLayout="@layout/random_recipe"
+
     android:previewImage="@drawable/example_appwidget_preview"
-    android:minWidth="110dp"
-    android:minHeight="40dp"
-    android:previewLayout="@layout/big_prime_view"
+    android:minHeight="110dp"
+    android:minWidth="180dp"
+    android:previewLayout="@layout/random_recipe"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="4"
     android:targetCellHeight="2"

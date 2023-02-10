@@ -1,19 +1,28 @@
 package se.gabnet.cooky;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +36,7 @@ import android.widget.ScrollView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -78,22 +88,26 @@ Context context;
 
 
     private DrawerLayout drawerLayout;
-    private Button addIngredientButton, addStepButton;
+    private Button addIngredientButton, addStepButton ;
+    private ImageButton imageAddButton;
     private FloatingActionButton saveButton;
     private List<Ingredient> ingredients;
     private List<Step> steps;
     private RecipeEditor recipeEditor;
     private EditText title;
     private EditText description;
-    private ImageView imageView;
+    private ImageView recipeImage;
     private ScrollView scrollView;
 
 
     public void save() {
         System.out.println(recipeEditor.printData());
-        long newId = DatabaseController.getDatabaseController().updateRecipe(recipeEditor);
+        long newId = PersistentRecipeEditData.update(recipeEditor, context);
         recipeEditor.setId(newId);
     }
+
+    int GALLERY_RESULT_CODE = 1;
+    ActivityResult galleryResult = new ActivityResult(GALLERY_RESULT_CODE,null);
 
 
 
@@ -104,12 +118,33 @@ Context context;
         addStepButton = view.findViewById(R.id.add_step_button);
         title = view.findViewById(R.id.recipe_title_text_view);
         description = view.findViewById(R.id.recipe_description_text_view);
-        imageView = view.findViewById(R.id.recipe_image);
+        recipeImage = view.findViewById(R.id.recipe_image);
         saveButton = view.findViewById(R.id.save_button);
         scrollView = view.findViewById(R.id.editor_scroll_view);
+        imageAddButton = view.findViewById(R.id.add_image_button);
+
+
+        View.OnClickListener imageAddListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                    galleryActivity.launch(
+                            new PickVisualMediaRequest.Builder()
+                                    .setMediaType((ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                                    .build()
+                    );
+                }
+            }
+        };
+        
+        imageAddButton.setOnClickListener(imageAddListener);
+        
+        recipeImage.setOnClickListener(imageAddListener);
 
         if (getArguments() != null) {
             recipeEditor = (RecipeEditor) getArguments().getSerializable("recipe");
+
         }
 
         if (recipeEditor == null) {
@@ -118,7 +153,7 @@ Context context;
             title.setText(recipeEditor.getTitle());
             description.setText(recipeEditor.getDescription());
             if (recipeEditor.getImage() != null) {
-                imageView.setImageBitmap(BitmapFactory.decodeByteArray(recipeEditor.getImage(), 0, recipeEditor.getImage().length));
+                recipeImage.setImageBitmap(BitmapFactory.decodeByteArray(recipeEditor.getImage(), 0, recipeEditor.getImage().length));
             }
             for (Ingredient ingredient : recipeEditor.getIngredients()) {
                 addIngredient(view, ingredient);
@@ -130,14 +165,6 @@ Context context;
 
         ingredients = recipeEditor.getIngredients();
         steps = recipeEditor.getSteps();
-
-        imageView.setOnClickListener(v -> {
-            //TODO Open gallery get image and replace it in imageview
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            recipeEditor.setImage(baos.toByteArray());
-        });
 
         title.addTextChangedListener(new ListUpdateOnTextWatcher() {
             @Override
@@ -172,6 +199,14 @@ Context context;
         });
     }
 
+    private boolean requestPermission(String check) {
+        if (ActivityCompat.checkSelfPermission(context, check) == PackageManager.PERMISSION_GRANTED){
+            return true;
+        } else {
+            permissionActivity.launch(check);
+            return permission;
+        }
+    }
 
     private void addIngredient(View view, Ingredient ingredient) {
         View ingredientView = View.inflate(context,R.layout.recipe_viewer_ingeredient,null);
@@ -253,6 +288,8 @@ Context context;
         });
 
     }
+    private ActivityResultLauncher<String> permissionActivity;
+    private boolean permission;
 
 
 
@@ -263,10 +300,42 @@ Context context;
 
     }
 
+    ActivityResultLauncher<PickVisualMediaRequest> galleryActivity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        permissionActivity = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        permission = result;
+                    }
+                }
+
+        );
+        galleryActivity = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri result) {
+                        recipeImage.setImageURI(result);
+                        imageAddButton.setVisibility(View.GONE);
+                        BitmapDrawable bitmapDrawable = ((BitmapDrawable) recipeImage.getDrawable());
+                        Bitmap bitmap = bitmapDrawable .getBitmap();
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] imageInByte = stream.toByteArray();
+                        recipeEditor.setImage(imageInByte);
+                    }
+                }
+        );
+
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recipe_viewer, container, false);
     }
+
 }

@@ -43,7 +43,6 @@ public class FirstFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        context = getActivity();
         binding = FragmentFirstBinding.inflate(inflater, container, false);
 
         try {

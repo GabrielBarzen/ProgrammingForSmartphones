@@ -1,6 +1,8 @@
 package se.gabnet.cooky.Model;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     private String text;
     private int amount;
     private boolean weight;

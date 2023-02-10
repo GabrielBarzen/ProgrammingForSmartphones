@@ -1,7 +1,10 @@
 package se.gabnet.cooky;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,10 +42,12 @@ public class FragmentRecipeList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navigationController = Navigation.findNavController(this.getActivity(),R.id.nav_host_fragment_view);
         super.onViewCreated(view, savedInstanceState);
+
         recipeListView = view.findViewById(R.id.recipe_list_list_view);
         newRecipeButton = view.findViewById(R.id.new_recipe_button);
         adapter = new ArrayAdapter<>(context,R.layout.activity_list_view_item);
 
+        RandomRecipe.update(context);
 
         recipeListView.setOnItemClickListener((parent, view1, position, id) -> {
             RecipeEditor recipe = (RecipeEditor) recipeListView.getItemAtPosition(position);
@@ -56,53 +61,6 @@ public class FragmentRecipeList extends Fragment {
             navigateToRecipe(recipe);
         });
 
-
-        /*recipeListView.setOnItemClickListener((parent, view1, position, id) -> {
-            Bundle recipeData = null;
-            RecipeEditor recipe = (RecipeEditor) recipeListView.getItemAtPosition(position);
-            System.out.println("GETTING " + recipe.getId());
-
-            if (currentRecipe != null) {
-                System.out.println("ATTEMPT SAVE BEFORE LOADING NEW");
-                if (currentRecipe.getId() != recipe.getId()) {
-                    System.out.println("UPDATING OLD");
-                    PersistentRecipeEditData.update(currentRecipe);
-                    System.out.println("FETCHING NEW WITH ID " + recipe.getId());
-                    currentRecipe = PersistentRecipeEditData.getRecipe(recipe);
-                    System.out.println("GOT NEW WITH ID " + recipe.getId());
-                }
-                recipeData = new Bundle();
-                recipeData.putSerializable("recipe",currentRecipe);
-            } else {
-                currentRecipe = PersistentRecipeEditData.getRecipe(recipe);
-                recipeData = new Bundle();
-                recipeData.putSerializable("recipe",currentRecipe);
-            }
-
-            navigationController.navigate(R.id.action_fragmentRecipeList_to_fragmentRecipeViewer, recipeData);
-        });
-        boolean pressed = false;
-        newRecipeButton.setOnClickListener(v -> {
-            System.out.println("PRESSING NEW RECIPE CLICKED");
-            if (!pressed) {
-                if (currentRecipe != null) {
-                    System.out.println("SAVING BEFORE SWITCHING");
-                    PersistentRecipeEditData.saveToDb(currentRecipe);
-                }
-                if (adapter.getCount() > 0) {
-                    long maxId = adapter.getItem(0).getId();
-                    currentRecipe = new RecipeEditor(maxId);
-                } else {
-                    currentRecipe = new RecipeEditor(-1);
-                }
-                System.out.println("ADDING NEW RECIPE TO DB");
-                currentRecipe.setId(PersistentRecipeEditData.update(currentRecipe));
-
-                Bundle recipeData = new Bundle();
-                recipeData.putSerializable("recipe", currentRecipe);
-                navigationController.navigate(R.id.action_fragmentRecipeList_to_fragmentRecipeViewer, recipeData);
-            }
-        });*/
 
         adapter = new RecipeListArrayAdapter(context,R.layout.activity_list_view_item, DatabaseController.getDatabaseController().getRecipeEditorList(), this);
         for (int i = 0; i < adapter.getCount(); i++) {

@@ -1,6 +1,8 @@
 package se.gabnet.cooky.Model;
 
-public class Step {
+import java.io.Serializable;
+
+public class Step implements Serializable {
 private String text;
 
 

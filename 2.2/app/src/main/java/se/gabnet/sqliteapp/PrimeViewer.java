@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class PrimeViewer extends Fragment {
@@ -51,16 +52,15 @@ public class PrimeViewer extends Fragment {
         primeListView.setAdapter(adapter);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            long[] longs = bundle.getLongArray("found_primes");
-            adapter.clear();
-            for (int i = longs.length - 1; i >= 0; i--) {
 
-                adapter.add(String.valueOf(longs[i]));
+            ArrayList<String> primes = new ArrayList<>(Arrays.asList(bundle.getStringArray("found_primes")));
+            adapter.clear();
+            for (String prime : primes) {
+                adapter.add(prime);
             }
 
-
         } else {
-            Log.w("ERROR", "onPrimaryNavigationFragmentChanged: bundle not found ",null );
+            Log.e("DATA_BUNDLE_ERROR", "onPrimaryNavigationFragmentChanged: bundle not found ",null );
         }
 
 

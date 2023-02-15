@@ -19,8 +19,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class PrimeFinder extends Fragment {
@@ -84,6 +88,7 @@ public class PrimeFinder extends Fragment {
         if (itemIds.isEmpty()) {
             ContentValues values = new ContentValues();
             values.put(PrimeDBContract.PrimeDBEntry._ID, 2);
+            values.put(PrimeDBContract.PrimeDBEntry.DATE_TIME, LocalDateTime.now().toString());
             try {
                 long newRowId = dbWrite.insert(PrimeDBContract.PrimeDBEntry.TABLE_NAME, null, values);
                 biggestPrime = 2;
@@ -99,7 +104,7 @@ public class PrimeFinder extends Fragment {
             public void onClick(View v) {
                 Cursor cursor = dbRead.query(
                         PrimeDBContract.PrimeDBEntry.TABLE_NAME,   // The table to query
-                        projection,             // The array of columns to return (pass null to get all)
+                        null,             // The array of columns to return (pass null to get all)
                         null,              // The columns for the WHERE clause
                         null,          // The values for the WHERE clause
                         null,                   // don't group the rows
@@ -107,20 +112,18 @@ public class PrimeFinder extends Fragment {
                         sortOrder               // The sort order
                 );
 
-                List<Long> itemIds = new ArrayList<>();
+                ArrayList<String> items = new ArrayList<>();
+
                 while(cursor.moveToNext()) {
                     long itemId = cursor.getLong(cursor.getColumnIndexOrThrow(PrimeDBContract.PrimeDBEntry._ID));
-                    itemIds.add(itemId);
+                    String time = cursor.getString(cursor.getColumnIndexOrThrow(PrimeDBContract.PrimeDBEntry.DATE_TIME));
+                    items.add("Prime : " +itemId +", Found at : " + time );
 
                 }
-                System.out.println("ITEM_ID:" + itemIds);
                 cursor.close();
                 Bundle bundle = new Bundle();
-                long[] primes = new long[itemIds.size()];
-                for (int i = 0; i < primes.length; i++) {
-                    primes[i] = itemIds.get(i);
-                }
-                bundle.putLongArray("found_primes",primes);
+
+                bundle.putStringArray("found_primes", items.toArray(new String[0]));
                 Navigation.findNavController(view).navigate(R.id.action_primeFinder_to_primeViewer,bundle);
             }
         });
@@ -135,6 +138,7 @@ public class PrimeFinder extends Fragment {
                         biggestPrime = num;
                         ContentValues values = new ContentValues();
                         values.put(PrimeDBContract.PrimeDBEntry._ID, num);
+                        values.put(PrimeDBContract.PrimeDBEntry.DATE_TIME, LocalDateTime.now().toString());
                         try {
                             long newRowId = dbWrite.insert(PrimeDBContract.PrimeDBEntry.TABLE_NAME, null, values);
                         } catch (SQLiteConstraintException e) {

@@ -24,6 +24,6 @@
             app:destination="@id/primeFinder" />
         <argument
             android:name="found_primes"
-            app:argType="long[]" />
+            app:argType="string[]" />
     </fragment>
 </navigation>

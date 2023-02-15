@@ -20,7 +20,8 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + PrimeDBContract.PrimeDBEntry.TABLE_NAME + " (" +
-                    PrimeDBContract.PrimeDBEntry._ID + " INTEGER PRIMARY KEY)";
+                    PrimeDBContract.PrimeDBEntry._ID + " INTEGER PRIMARY KEY," +
+                    PrimeDBContract.PrimeDBEntry.DATE_TIME + " TEXT)";
 
 
     private static final String SQL_DELETE_ENTRIES =

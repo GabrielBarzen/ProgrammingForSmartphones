@@ -130,9 +130,10 @@ Context context;
                 if (requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
                     galleryActivity.launch(
-                            new PickVisualMediaRequest.Builder()
-                                    .setMediaType((ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                                    .build()
+                            //new PickVisualMediaRequest.Builder()
+                            //        .setMediaType((ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                            //        .build()
+                            new PickVisualMediaRequest()
                     );
                 }
             }

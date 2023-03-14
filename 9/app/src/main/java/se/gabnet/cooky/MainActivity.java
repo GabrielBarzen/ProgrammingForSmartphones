@@ -8,11 +8,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -80,10 +83,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (navigationController.getCurrentDestination().equals(navigationController.findDestination(R.id.fragmentRecipeViewer))){
                 System.out.println("IS IN VIEWER");
 
-                navigationController.navigate(R.id.action_fragmentRecipeViewer_to_fragmentRecipeList);
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
-                drawerLayout.setVisibility(View.VISIBLE);
-                drawerLayout.open();
+                DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                navigationController.navigate(R.id.action_fragmentRecipeViewer_to_fragmentRecipeList);
+                                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
+                                drawerLayout.setVisibility(View.VISIBLE);                            case DialogInterface.BUTTON_NEGATIVE:
+
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Exiting the recipe now will discard all changes.").setPositiveButton("Yes", dialogListener).setTitle("Are you sure?")
+                        .setNegativeButton("No", dialogListener).show();
+
+
+
                 return true;
             }
         }

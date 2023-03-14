@@ -87,7 +87,7 @@ Context context;
      */
 
 
-    private DrawerLayout drawerLayout;
+
     private Button addIngredientButton, addStepButton ;
     private ImageButton imageAddButton;
     private FloatingActionButton saveButton;

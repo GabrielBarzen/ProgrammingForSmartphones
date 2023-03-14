@@ -7,7 +7,7 @@
             android:key="delete_content"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Delete all recipes" />
+            android:title="Delete all data" />
     </PreferenceCategory>
 
 </PreferenceScreen>
